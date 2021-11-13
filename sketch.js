@@ -3,14 +3,20 @@ const gridSize = 3;
 // Snake
 var snake;
 
+// Thickness
+var edgeThickness = 100;
+
 function setup() {
-    createCanvas(800, 800);
+    createCanvas(1500, 800);
+
+    // Edges
+    leftEdge = createSprite(-edgeThickness / 2, height / 2, edgeThickness, height);
+    rightEdge = createSprite(800-edgeThickness, height / 2, edgeThickness, height);
+    topEdge = createSprite(width / 2, -edgeThickness / 2, width, edgeThickness);
+    bottomEdge = createSprite(width / 2, height + (edgeThickness / 2), width, edgeThickness);
 
     // Snake
     snake = createSprite(gridSize/2, gridSize/2, gridSize, gridSize);
-
-    // Edges
-    edge1 = createSprite()
 }
 
 function draw() {
@@ -39,10 +45,10 @@ function draw() {
 
     // Snake
     snake.shapeColor = "blue";
-    snake.collide(edges[0]);
-    snake.collide(edges[1]);
-    snake.collide(edges[2]);
-    snake.collide(edges[3]);
+    snake.collide(leftEdge);
+    snake.collide(rightEdge);
+    snake.collide(topEdge);
+    snake.collide(bottomEdge);
 
     drawSprites();
 }
