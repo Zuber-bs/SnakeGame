@@ -6,17 +6,29 @@ var snake;
 // Thickness
 var edgeThickness = 100;
 
+// Game State
+var gameState = 0; // Play
+
+// Star of the game
+var startOfTheGame = true;
+
+// Fruit
+var fruit;
+var fruitPosX = [];
+var fruitPosY = [];
+
 function setup() {
-    createCanvas(1500, 800);
+    createCanvas(750, 750);
 
     // Edges
     leftEdge = createSprite(-edgeThickness / 2, height / 2, edgeThickness, height);
-    rightEdge = createSprite(800-edgeThickness, height / 2, edgeThickness, height);
     topEdge = createSprite(width / 2, -edgeThickness / 2, width, edgeThickness);
-    bottomEdge = createSprite(width / 2, height + (edgeThickness / 2), width, edgeThickness);
 
     // Snake
     snake = createSprite(gridSize/2, gridSize/2, gridSize, gridSize);
+
+    // Fruit
+    fruit = createSprite(0, 0, gridSize, gridSize);
 }
 
 function draw() {
@@ -46,9 +58,12 @@ function draw() {
     // Snake
     snake.shapeColor = "blue";
     snake.collide(leftEdge);
-    snake.collide(rightEdge);
     snake.collide(topEdge);
-    snake.collide(bottomEdge);
+
+    // Fruit
+    if(startOfTheGame) {
+        fruitSpawning();
+    }
 
     drawSprites();
 }
@@ -73,4 +88,16 @@ function keyPressed() {
         snake.velocityX = gridSize;
         snake.velocityY = 0;
     }
+}
+
+function fruitSpawning() {
+        var x = floor(random(1, 50));
+        var y = floor(random(1, 50));
+        for(var i = 0; i < 50; i++) {
+            
+        }
+        fruit.position.x = x
+        fruit.position.y = y
+        console.log(fruit.x, fruit.y);
+        startOfTheGame = false;
 }
