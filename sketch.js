@@ -2,6 +2,7 @@ const gridSize = 3;
 
 // Snake
 var snake;
+var snakeTail = [];
 
 // Thickness
 var edgeThickness = 100;
@@ -16,6 +17,7 @@ var startOfTheGame = true;
 var fruit;
 var fruitPosX = [];
 var fruitPosY = [];
+var fruitGroup;
 
 function setup() {
     createCanvas(750, 750);
@@ -29,6 +31,7 @@ function setup() {
 
     // Fruit
     fruit = createSprite(0, 0, gridSize, gridSize);
+    fruitGroup = createGroup();
 }
 
 function draw() {
@@ -63,7 +66,16 @@ function draw() {
     // Fruit
     if(startOfTheGame) {
         fruitSpawning();
+        snakeTail.push({x: snake.x, y: snake.y});
     }
+
+    snakeTail.map((item) => {
+        item.x = snake.x;
+        item.y = snake.y;
+    });
+
+    // Collision
+    checkCollision(fruitGroup);
 
     drawSprites();
 }
@@ -96,8 +108,18 @@ function fruitSpawning() {
         for(var i = 0; i < 50; i++) {
             
         }
-        fruit.position.x = x
-        fruit.position.y = y
-        console.log(fruit.x, fruit.y);
+        fruit.position.x = x * gridSize - gridSize/2;
+        fruit.position.y = y * gridSize - gridSize/2;
+        console.log(gridSize);
         startOfTheGame = false;
+        fruitGroup.add(fruit);
+}
+
+function checkCollision(group) {
+    if(snake.isTouching(group)) {
+        fruitSpawning();
+        fill("blue");
+        snakeTail.push({x: snake.x, y: snake.y});
+        console.log(snakeTail);
+    }
 }
